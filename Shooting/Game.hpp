@@ -39,6 +39,9 @@ public:
     Color color;
 };
 
+//
+SDL_Rect PongObect_To_SDLRect(const PongObject&);
+
 //Class that controlls the game
 class Game{
 public:

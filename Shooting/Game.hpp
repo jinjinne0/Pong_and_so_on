@@ -28,6 +28,9 @@ struct Color{
 //class for dynamic object
 class PongObject{
 public:
+    PongObject();
+    PongObject(Point2, float, float, Vector2, Color);
+
     //Coordinatee of the centeer of object
     Point2 coordinate;
     float width, height;

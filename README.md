@@ -2,6 +2,11 @@
 I created two basic 2D games, "Pong", "Shooting".
 
 # DEMO
+"Pong":
+
+
+"Shooting":
+
 
 # Requirement
 OS: macOS Big Sur version 11.2.1

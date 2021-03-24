@@ -19,7 +19,7 @@ const int kWindowHeight = 768;
 const int kThickness = 15;
 const float kPaddleHeight = 100.0f; 
 const float kAcceleration_ps = 20.0f;
-const float kBallXSpeedLimit = 400.0f;
+const float kBallXSpeedLimit = 400.0f;  //If no limit, interaction between the ball and the paddle may be ignored.
 
 //--------------------------------
 //Function definition

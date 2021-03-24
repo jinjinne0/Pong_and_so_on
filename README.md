@@ -46,3 +46,5 @@ Still I don`t learn how to display strings on SDL window, so Points and victory-
 # Author
 zer0
 
+# Licence
+"Pong_and_so_on" is under MIT Licence.

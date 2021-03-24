@@ -41,7 +41,7 @@ Keyboard
 # Note
 It`s trainig to make me really understand single-threaded Game class,
 so libraries used are just standerd c++-library and SDL2.
-Still I don`t learn how to display strings on SDL window, so Points and victory-or-defeat get displayed on Terminal.
+Still I don`t learn how to display strings on SDL window, so the point get displayed on Terminal.
 
 # Author
 zer0

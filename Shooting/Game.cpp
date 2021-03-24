@@ -58,6 +58,15 @@ PongObject::PongObject(Point2 coordinate, float width, float height, Vector2 vel
 ,color(color)
 {}
 
+SDL_Rect PongObect_To_SDLRect(const PongObject& target){
+    return SDL_Rect{
+        static_cast<int>(target.coordinate.x),
+        static_cast<int>(target.coordinate.y),
+        static_cast<int>(target.width),
+        static_cast<int>(target.height)
+    };
+}
+
 //TODO: 簡単な変数の初期化
 Game::Game()
 :mIsRunning(true)
@@ -210,10 +219,21 @@ void Game::GenerateOutput(){
     SDL_SetRenderDrawColor(mRenderer, kBackColor.R, kBackColor.G, kBackColor.B, kBackColor.A);
     SDL_RenderClear(mRenderer);
     
-    //TODO: 壁
-    //TODO: Shooter
-    //TODO: Enemy
+    //draw top wall
+    SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(kTopWall));
+    //draw bottom wall
+    SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(kBottomWall));
+    //draw shooter
+    SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(mShooter));
+    //TODO: Enemies
+    for(auto x : mEnemies){
+        SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(x));
+    }
+
     //TODO: Bullets
+    for(auto x : mBullets){
+        SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(x));
+    }
     //switch back buffer
     SDL_RenderPresent(mRenderer);
 }

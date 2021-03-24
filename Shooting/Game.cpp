@@ -153,7 +153,7 @@ void Game::ProcessInput(){
     //If there QUIT_event, end game
     SDL_Event event;
     while(SDL_PollEvent(&event)){
-        if(event.type = SDL_QUIT){
+        if(event.type == SDL_QUIT){
             mIsRunning = false;
         }
     }
@@ -218,21 +218,29 @@ void Game::GenerateOutput(){
     //draw background
     SDL_SetRenderDrawColor(mRenderer, kBackColor.R, kBackColor.G, kBackColor.B, kBackColor.A);
     SDL_RenderClear(mRenderer);
+
+    //put somethig We want to draw in the object
+    SDL_Rect object_to_draw;
     
     //draw top wall
-    SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(kTopWall));
+    object_to_draw = PongObect_To_SDLRect(kTopWall);
+    SDL_RenderFillRect(mRenderer, &object_to_draw);
     //draw bottom wall
-    SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(kBottomWall));
+    object_to_draw = PongObect_To_SDLRect(kBottomWall);
+    SDL_RenderFillRect(mRenderer, &object_to_draw);
     //draw shooter
-    SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(mShooter));
+    object_to_draw = PongObect_To_SDLRect(mShooter);
+    SDL_RenderFillRect(mRenderer, &object_to_draw);
     //TODO: Enemies
     for(auto x : mEnemies){
-        SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(x));
+        object_to_draw = PongObect_To_SDLRect(x);
+        SDL_RenderFillRect(mRenderer, &object_to_draw);
     }
 
     //TODO: Bullets
     for(auto x : mBullets){
-        SDL_RenderFillRect(mRenderer, &PongObect_To_SDLRect(x));
+        object_to_draw = PongObect_To_SDLRect(x);
+        SDL_RenderFillRect(mRenderer, &object_to_draw);
     }
     //switch back buffer
     SDL_RenderPresent(mRenderer);

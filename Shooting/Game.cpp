@@ -16,7 +16,12 @@
 const float kShooterSpeed = 400.0f; //pixels per seconds
 const int kWindowWidth = 1024;
 const int kWindowHeight = 768;
+const int kThickness = 15;
 const float kEps = 1e-9; // 
+const Color kBulletColor = Color(255, 255, 255, 255);//White
+const Color kBackColor = Color(0, 0, 0, 123);        //half-transparent Black
+const Color kEnemyColor = Color(255, 0, 0, 255);     //Red
+const Color kShooterColor = Color(150, 80, 66, 255); //Brown
 
 //--------------------------------
 //Function definition
@@ -73,11 +78,12 @@ bool Game::Initialize(){
         return false;
     }
 
-    //TODO:Initialize shooter
-    mShooter.coordinate = Vector2();
-    mShooter.width;
-    mShooter.vell;
-    mShooter.color = Color();
+    //Initialize shooter
+    mShooter.coordinate = Point2(kThickness, kWindowHeight/2.0f);
+    mShooter.width = static_cast<float>(kThickness);
+    mShooter.height = static_cast<float>(kThickness);
+    mShooter.vell = Vector2(0.0f, 0.0f);
+    mShooter.color = kShooterSpeed;
 
     //TODO: Prepare for game loop
 

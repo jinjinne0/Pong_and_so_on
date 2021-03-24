@@ -21,7 +21,23 @@ const float kEps = 1e-9; //
 const Color kBulletColor = Color(255, 255, 255, 255);//White
 const Color kBackColor = Color(0, 0, 0, 123);        //half-transparent Black
 const Color kEnemyColor = Color(255, 0, 0, 255);     //Red
-const Color kShooterColor = Color(150, 80, 66, 255); //Brown
+const Color kShooterColor = Color(255, 217, 0, 255); //Yellow
+const Color kWallColor = Color(175, 175, 176, 255);  //Silver gray
+
+const PongObject kTopWall(
+    Point2(kWindowWidth/2.0f, kThickness/2.0f),  //center-coordinate of top wall
+    kWindowWidth,                                //width of top wall
+    static_cast<float>(kThickness),              //height of top wall
+    Vector2(0.0f, 0.0f),                         //vellocity of top wall
+    kWallColor                                   //Color of top wall
+);
+const PongObject kBottomWall(
+    Point2(kWindowHeight - kThickness/2.0f, kWindowWidth/2.0f),
+    kWindowWidth,                                
+    static_cast<float>(kThickness),              
+    Vector2(0.0f, 0.0f),                         
+    kWallColor   
+);
 
 //--------------------------------
 //Function definition
@@ -31,6 +47,15 @@ Vector2::Vector2(float x = 0.0f, float y = 0.0f):x(x),y(y){}
 
 Color::Color(short int R = 0, short int G = 0, short int B = 0, short int A =0)
 :R(R), G(G), B(B), A(A)
+{}
+
+PongObject::PongObject(){}
+PongObject::PongObject(Point2 coordinate, float width, float height, Vector2 vell, Color color)
+:coordinate(coordinate)
+,width(width)
+,height(height)
+,vell(vell)
+,color(color)
 {}
 
 //TODO: 簡単な変数の初期化
@@ -152,22 +177,43 @@ void Game::ProcessInput(){
     mShooter.vell.y = shooter_direction * kShooterSpeed;
 
     //TODO: Kでbullet発射
+    //TODO: この時、連射のアイドリングに気をつける
 
 }
 
 void Game::UpdateGame(){
-    //TODO: deltatimeの取得
-    //TODO: mTicksCountの更新
-    //TODO: Pauseしてるなら終了.PausingTicksの更新
+    //get delta time and set it to seconds
+    while(!SDL_TICKS_PASSED(SDL_GetTicks(), mTicksCount + 16));
+    float deltatime = (SDL_GetTicks() - mTicksCount)/1000.0f;
+
+    if(deltatime > 0.05f){
+        deltatime = 0.05f;
+    }
+
+    //Update mTicksCount
+    mTicksCount = SDL_GetTicks();
+    //If game is paused, stop updategame.
+    if(mIsPaused){
+        //update ticks count while pausing
+        mPausingTicks += deltatime * 1000.0f;
+        return;
+    }
+
     //TODO: Shooterの更新
     //TODO: Enemyの更新(mIsPausingの更新)
     //TODO: Bulletの更新(Enemyの削除も)
 }
 
 void Game::GenerateOutput(){
+
+    //draw background
+    SDL_SetRenderDrawColor(mRenderer, kBackColor.R, kBackColor.G, kBackColor.B, kBackColor.A);
+    SDL_RenderClear(mRenderer);
+    
     //TODO: 壁
     //TODO: Shooter
     //TODO: Enemy
     //TODO: Bullets
-    //バッファの取り替え
+    //switch back buffer
+    SDL_RenderPresent(mRenderer);
 }

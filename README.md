@@ -2,10 +2,10 @@
 I created two basic 2D games, "Pong", "Shooting".
 
 # DEMO
-'![demo](https://raw.github.com/wiki/jinjinne0/Pong_and_so_on/images.gif/Pong_sample.gif)'
-"Pong";
+"Pong":<p>
+![demo](https://raw.github.com/wiki/jinjinne0/Pong_and_so_on/images.gif/Pong_sample.gif)
 
-"Shooting":
+"Shooting":<p>
 
 
 # Requirement

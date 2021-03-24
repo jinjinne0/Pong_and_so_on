@@ -204,7 +204,7 @@ void Game::UpdateGame(){
     }
 
     //update paddle
-    mPaddle.vell.y *= (300.0f + (kAcceleration_ps*mTicksCount)/1000.0f);
+    mPaddle.vell.y *= 400.0f;
     mPaddle.coordinate.y = mPaddle.coordinate.y + (mPaddle.vell.y * deltatime);
     //Make sure the paddle doesn`t go off the screen
     if(mPaddle.coordinate.y < (kThickness + kPaddleHeight/2.0f)){

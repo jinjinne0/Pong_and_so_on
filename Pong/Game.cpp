@@ -19,6 +19,7 @@ const int kWindowHeight = 768;
 const int kThickness = 15;
 const float kPaddleHeight = 100.0f; 
 const float kAcceleration_ps = 20.0f;
+const float kBallXSpeedLimit = 400.0f;
 
 //--------------------------------
 //Function definition
@@ -214,7 +215,9 @@ void Game::UpdateGame(){
     }
 
     //update ball
-    mBall.vell = mBall.vell * (1 + (kAcceleration_ps*deltatime/mBall.vell.abs()));
+    if(mBall.vell.x < kBallXSpeedLimit){
+        mBall.vell = mBall.vell * (1 + (kAcceleration_ps*deltatime/mBall.vell.abs()));
+    }
     mBall.coordinate = mBall.coordinate + (mBall.vell * deltatime);
 
     //Did the ball collide with walls?
@@ -237,7 +240,7 @@ void Game::UpdateGame(){
     if(
         y_diff <= (kPaddleHeight / 2.0f) &&
         (mBall.coordinate.x - mPaddle.coordinate.x) <= (mPaddle.width + mBall.width)/2.0f &&
-        (mBall.coordinate.x - mPaddle.coordinate.x) >= ((mPaddle.width + mBall.width)/2.0f - 5.0f) &&
+        (mBall.coordinate.x - mPaddle.coordinate.x) >= ((mPaddle.width + mBall.width)/2.0f - 10.0f) &&
         mBall.vell.x < 0.0f
     ){
         mBall.vell.x *= -1.0f;

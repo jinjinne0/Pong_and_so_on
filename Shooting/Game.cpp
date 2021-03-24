@@ -32,7 +32,7 @@ const PongObject kTopWall(
     kWallColor                                   //Color of top wall
 );
 const PongObject kBottomWall(
-    Point2(kWindowHeight - kThickness/2.0f, kWindowWidth/2.0f),
+    Point2(kWindowWidth/2.0f, kWindowHeight - kThickness/2.0f),
     kWindowWidth,                                
     static_cast<float>(kThickness),              
     Vector2(0.0f, 0.0f),                         
@@ -60,11 +60,18 @@ PongObject::PongObject(Point2 coordinate, float width, float height, Vector2 vel
 
 SDL_Rect PongObect_To_SDLRect(const PongObject& target){
     return SDL_Rect{
-        static_cast<int>(target.coordinate.x),
-        static_cast<int>(target.coordinate.y),
+        static_cast<int>(target.coordinate.x - target.width/2.0f),
+        static_cast<int>(target.coordinate.y - target.height/2.0f),
         static_cast<int>(target.width),
         static_cast<int>(target.height)
     };
+}
+
+void DrawPongObject(SDL_Renderer* renderer_ptr, const PongObject& object){
+    SDL_Rect object_to_draw;
+    SDL_SetRenderDrawColor(renderer_ptr, object.color.R, object.color.G, object.color.B, object.color.A);
+    object_to_draw = PongObect_To_SDLRect(object);
+    SDL_RenderFillRect(renderer_ptr, &object_to_draw);
 }
 
 //TODO: 簡単な変数の初期化
@@ -220,27 +227,22 @@ void Game::GenerateOutput(){
     SDL_RenderClear(mRenderer);
 
     //put somethig We want to draw in the object
-    SDL_Rect object_to_draw;
+    
     
     //draw top wall
-    object_to_draw = PongObect_To_SDLRect(kTopWall);
-    SDL_RenderFillRect(mRenderer, &object_to_draw);
+    DrawPongObject(mRenderer, kTopWall);
     //draw bottom wall
-    object_to_draw = PongObect_To_SDLRect(kBottomWall);
-    SDL_RenderFillRect(mRenderer, &object_to_draw);
+    DrawPongObject(mRenderer, kBottomWall);
     //draw shooter
-    object_to_draw = PongObect_To_SDLRect(mShooter);
-    SDL_RenderFillRect(mRenderer, &object_to_draw);
+    DrawPongObject(mRenderer, mShooter);
     //TODO: Enemies
     for(auto x : mEnemies){
-        object_to_draw = PongObect_To_SDLRect(x);
-        SDL_RenderFillRect(mRenderer, &object_to_draw);
+        DrawPongObject(mRenderer, x);
     }
 
     //TODO: Bullets
     for(auto x : mBullets){
-        object_to_draw = PongObect_To_SDLRect(x);
-        SDL_RenderFillRect(mRenderer, &object_to_draw);
+        DrawPongObject(mRenderer, x);
     }
     //switch back buffer
     SDL_RenderPresent(mRenderer);

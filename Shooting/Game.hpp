@@ -41,6 +41,8 @@ public:
 
 //
 SDL_Rect PongObect_To_SDLRect(const PongObject&);
+//PongObjectをWindowに描画する
+void DrawPongObject(SDL_Renderer , PongObject);
 
 //Class that controlls the game
 class Game{

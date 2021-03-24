@@ -67,6 +67,8 @@ private:
     bool mIsPaused;
     //ticks count
     Uint32 mTicksCount;
+    //ticks count while pausing
+    Uint32 mPausingTicksCount;
 
     //Paddle
     Rectangle mPaddle;

@@ -72,6 +72,7 @@ Game::Game()
 ,mIsRunning(true)
 ,mIsPaused(true)
 ,mTicksCount(0)
+,mPausingTicksCount(0)
 {
 
 }
@@ -139,7 +140,7 @@ void Game::RunLoop(){
         GenerateOutput();
     }
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
-    printf("       Your score is %dpt\n", static_cast<int>(SDL_GetTicks()/1000.0f));
+    printf("       Your score is %dpt\n", ((SDL_GetTicks() - mPausingTicksCount)/1000));
     printf("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=\n");
 }
 
@@ -197,6 +198,7 @@ void Game::UpdateGame(){
 
     //If pause, we won`t update game
     if(mIsPaused){
+        mPausingTicksCount += deltatime *1000.0f;
         return;
     }
 

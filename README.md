@@ -2,16 +2,16 @@
 I created two basic 2D games, "Pong", "Shooting".
 
 # DEMO
-"Pong":
 '![demo](https://raw.github.com/wiki/jinjinne0/Pong_and_so_on/images.gif/Pong_sample.gif)'
+"Pong";
 
 "Shooting":
 
 
 # Requirement
-OS: macOS Big Sur version 11.2.1
-Programing Language: c++
-compiler: gcc version 10.2.0 (Homebrew GCC 10.2.0_4)
+OS: macOS Big Sur version 11.2.1<p>
+Programing Language: c++<p>
+compiler: gcc version 10.2.0 (Homebrew GCC 10.2.0_4)<p>
 → make sure command "g++" call this compiler
 
 # Installation

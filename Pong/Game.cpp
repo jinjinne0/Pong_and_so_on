@@ -240,7 +240,8 @@ void Game::UpdateGame(){
     if(
         y_diff <= (kPaddleHeight / 2.0f) &&
         (mBall.coordinate.x - mPaddle.coordinate.x) <= (mPaddle.width + mBall.width)/2.0f &&
-        (mBall.coordinate.x - mPaddle.coordinate.x) >= ((mPaddle.width + mBall.width)/2.0f - 10.0f) &&
+        (mBall.coordinate.x - mPaddle.coordinate.x) >= ((mPaddle.width + mBall.width)/2.0f - 20.0f) &&
+        //max of ball`s x-speed is 400p/s, and max value of deltatime is 0.05.(400*0.05=)20p is min-value of pxels that is certainly ignored.
         mBall.vell.x < 0.0f
     ){
         mBall.vell.x *= -1.0f;

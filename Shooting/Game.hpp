@@ -41,6 +41,8 @@ public:
     Color color;
 };
 
+bool IsColliedRectangle(PongObject, PongObject);
+
 //
 SDL_Rect PongObect_To_SDLRect(const PongObject&);
 //PongObjectをWindowに描画する

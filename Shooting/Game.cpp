@@ -67,6 +67,22 @@ PongObject::PongObject(Point2 coordinate, float width, float height, Vector2 vel
 ,color(color)
 {}
 
+//Did two rectangle objects collide with each other?
+bool IsColliedRectangle(PongObject object1, PongObject object2){
+    float x_diff = object1.coordinate.x - object2.coordinate.x;
+    float y_diff = object1.coordinate.y - object2.coordinate.y;
+    //get absolute value
+    x_diff = (x_diff >= 0.0f) ? x_diff : -x_diff;
+    y_diff = (y_diff >= 0.0f) ? y_diff : -y_diff;
+    if(
+        x_diff <= (object1.width + object2.width)/2.0f &&
+        y_diff <= (object1.height + object1.height)/2.0f
+    ){
+        return true;
+    }
+    return false;
+}
+
 SDL_Rect PongObect_To_SDLRect(const PongObject& target){
     return SDL_Rect{
         static_cast<int>(target.coordinate.x - target.width/2.0f),
@@ -83,7 +99,7 @@ void DrawPongObject(SDL_Renderer* renderer_ptr, const PongObject& object){
     SDL_RenderFillRect(renderer_ptr, &object_to_draw);
 }
 
-//TODO: 簡単な変数の初期化
+//簡単な変数の初期化
 Game::Game()
 :mIsRunning(true)
 ,mIsPaused(true)
@@ -92,6 +108,7 @@ Game::Game()
 ,mWindow(nullptr)
 ,mRenderer(nullptr)
 ,mLastShootTime_ms(0)
+,mLastEnemyTime_ms(0)
 {}
 
 //If initialization success, return true. If not, return false
@@ -136,8 +153,6 @@ bool Game::Initialize(){
     mShooter.vell = Vector2(0.0f, 0.0f);
     mShooter.color = kShooterColor;
 
-    //TODO: Prepare for game loop
-
     //success to initialize the game
     return true;
 }
@@ -160,9 +175,6 @@ void Game::Shutdown(){
     SDL_DestroyWindow(mWindow);
     SDL_DestroyRenderer(mRenderer);
     SDL_Quit();
-
-    //TODO:Initialize()で初期化などしたものを排除
-    //動的に確保したメモリも削除
 }
 
 void Game::ProcessInput(){
@@ -268,13 +280,16 @@ void Game::UpdateGame(){
         //If an enemy go off the screen, end game
         if(x.coordinate.x < 0.0f){
             mIsRunning = false;
+            break;
         }
 
-        //TODO: If an enemy collide with the shooter, end game
-        if(){}
-
-        //TODO: any enemy that collide with a bullet, disapper.Then, also, the bullet disapper
-        if(){}
+        //If an enemy collide with the shooter, end game
+        if(
+            IsColliedRectangle(x, mShooter)
+        ){
+            mIsRunning = false;
+            break;
+        }
 
         //With top wall?
         if(
@@ -290,8 +305,19 @@ void Game::UpdateGame(){
         ){
             x.vell.y *= -1.0f;
         }
-    } 
-
+    }
+    //any enemy that collide with a bullet, disapper.
+    for(auto x : mBullets){
+        std::list<PongObject> delete_list;
+        for(auto y : mEnemies){
+            if(IsColliedRectangle(x, y)){
+                delete_list.push_back(y);
+            }
+        }
+        for(auto y : delete_list){
+            mEnemies.remove(y);
+        }
+    }
 
 }
 

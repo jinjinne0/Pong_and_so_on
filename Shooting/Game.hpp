@@ -15,6 +15,8 @@
 
 struct Vector2{
     Vector2(float, float);
+    Vector2 operator + (const Vector2&) const;
+    Vector2 operator * (float d) const;
     float x, y;
 };
 
@@ -77,7 +79,10 @@ private:
     std::list<PongObject> mBullets;
     //List of enemy
     std::list<PongObject> mEnemies;
-
+    //Last time a bullet was shooted
+    Uint32 mLastShootTime_ms;
+    //Last time an enemy went out
+    Uint32 mLastEnemyTime_ms;
 
 };
 

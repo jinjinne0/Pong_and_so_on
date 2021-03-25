@@ -292,7 +292,7 @@ void Game::UpdateGame(){
     //new enemy
     if(SDL_GetTicks() > mLastEnemyTime_ms + kEnemyInterval_s*1000.0f){
         PongObject new_enemy(
-            Point2(static_cast<float>(kWindowWidth), static_cast<float>(random()%1000)),
+            Point2(static_cast<float>(kWindowWidth), static_cast<float>(30 + random()%700)),//30~730の高さにのみ発生
             kThickness,
             kThickness,
             Vector2(-200.0f - (rand()%100), (rand()%600) - 300),//set new enemy`s max vellocity 

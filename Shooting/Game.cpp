@@ -289,6 +289,13 @@ void Game::UpdateGame(){
 
     //update shooter`s coordinate
     mShooter.coordinate.y = mShooter.coordinate.y + mShooter.vell.y*deltatime;
+    //Make sure that shooter doesn`t go off the screen
+    if((mShooter.coordinate.y - mShooter.height/2.0f) < (kTopWall.coordinate.y + kTopWall.height/2.0f)){
+        mShooter.coordinate.y = mShooter.height/2.0f + kTopWall.coordinate.y + kTopWall.height/2.0f;
+    }
+    if((mShooter.coordinate.y + mShooter.height/2.0f) > (kBottomWall.coordinate.y - kBottomWall.height/2.0f)){
+        mShooter.coordinate.y = -mShooter.height/2.0f + kBottomWall.coordinate.y - kBottomWall.height/2.0f;
+    }
 
     //new enemy
     if(SDL_GetTicks() > mLastEnemyTime_ms + kEnemyInterval_s*1000.0f){

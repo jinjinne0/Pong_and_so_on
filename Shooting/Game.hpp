@@ -17,12 +17,14 @@ struct Vector2{
     Vector2(float, float);
     Vector2 operator + (const Vector2&) const;
     Vector2 operator * (float d) const;
+    bool operator == (const Vector2&) const;
     float x, y;
 };
 
 typedef Vector2 Point2;
 
 struct Color{
+    bool operator == (const Color&) const;
     Color(short int, short int, short int, short int);
     short int R, G, B, A;
 };
@@ -32,6 +34,7 @@ class PongObject{
 public:
     PongObject();
     PongObject(Point2, float, float, Vector2, Color);
+    bool operator == (const PongObject&) const;
 
     //Coordinatee of the centeer of object
     Point2 coordinate;

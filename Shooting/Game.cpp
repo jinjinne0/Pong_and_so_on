@@ -47,16 +47,41 @@ const PongObject kBottomWall(
 
 Vector2::Vector2(float x = 0.0f, float y = 0.0f):x(x),y(y){}
 
+//Vector2`s operator
 Vector2 Vector2::operator+(const Vector2& other) const {
     return Vector2(x + other.x, y + other.y);
 }
 Vector2 Vector2::operator*(float d) const{
     return Vector2(x*d, y*d);
 }
+bool Vector2::operator == (const Vector2& other) const{
+
+    if(
+        abs(x - other.x) < kEps &&
+        abs(y - other.y) < kEps
+    ){
+        return true;
+    }
+
+    return false;
+}
 
 Color::Color(short int R = 0, short int G = 0, short int B = 0, short int A =0)
 :R(R), G(G), B(B), A(A)
 {}
+
+bool Color::operator == (const Color &other) const{
+    if(
+        R == other.R &&
+        G == other.G &&
+        B == other.B &&
+        A == other.A
+    ){
+        return true;
+    }
+
+    return false;
+}
 
 PongObject::PongObject(){}
 PongObject::PongObject(Point2 coordinate, float width, float height, Vector2 vell, Color color)
@@ -66,6 +91,18 @@ PongObject::PongObject(Point2 coordinate, float width, float height, Vector2 vel
 ,vell(vell)
 ,color(color)
 {}
+
+bool PongObject::operator == (const PongObject& other) const{
+    if(
+        coordinate == other.coordinate &&
+        abs(width - other.width) < kEps && abs(height - other.height) < kEps &&
+        vell == other.vell &&
+        color == other.color
+    ){
+        return true;
+    }
+    return false;
+}
 
 //Did two rectangle objects collide with each other?
 bool IsColliedRectangle(PongObject object1, PongObject object2){
@@ -266,17 +303,17 @@ void Game::UpdateGame(){
         mLastEnemyTime_ms = SDL_GetTicks();
     }
     //update enemies` coordinates
-    for(auto &x: mEnemies){
+    for(PongObject &x: mEnemies){
         x.coordinate = x.coordinate + x.vell*deltatime;
     }
 
     //update Bullet coordinate
-    for(auto &x: mBullets){
+    for(PongObject &x: mBullets){
         x.coordinate.x = x.coordinate.x + x.vell.x*deltatime;
     }
 
     //Did any enemy collide with somethig?
-    for(auto &x: mEnemies){
+    for(PongObject &x: mEnemies){
         //If an enemy go off the screen, end game
         if(x.coordinate.x < 0.0f){
             mIsRunning = false;
@@ -307,14 +344,14 @@ void Game::UpdateGame(){
         }
     }
     //any enemy that collide with a bullet, disapper.
-    for(auto x : mBullets){
+    for(PongObject x : mBullets){
         std::list<PongObject> delete_list;
-        for(auto y : mEnemies){
+        for(PongObject y : mEnemies){
             if(IsColliedRectangle(x, y)){
                 delete_list.push_back(y);
             }
         }
-        for(auto y : delete_list){
+        for(PongObject y : delete_list){
             mEnemies.remove(y);
         }
     }

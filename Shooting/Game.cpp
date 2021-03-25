@@ -24,7 +24,8 @@ const Color kBackColor = Color(0, 0, 0, 123);        //half-transparent Black
 const Color kEnemyColor = Color(255, 0, 0, 255);     //Red
 const Color kShooterColor = Color(255, 217, 0, 255); //Yellow
 const Color kWallColor = Color(175, 175, 176, 255);  //Silver gray
-const float kEnemyInterval_s = 1.0f;//the interval between time enemies come(unit is second)
+const float kEnemyInterval_s = 2.0f;//the interval between time enemies come(unit is second)
+const float kShootingInterval_s = 4*kThickness/kBulletSpeed;
 
 const PongObject kTopWall(
     Point2(kWindowWidth/2.0f, kThickness/2.0f),  //center-coordinate of top wall
@@ -253,7 +254,7 @@ void Game::ProcessInput(){
 
     //K-key to shoot a bullet
     //there is idling time for next bullet
-    if(state[SDL_SCANCODE_K] && (mLastShootTime_ms + 2*kThickness*1000.0f/kBulletSpeed) < SDL_GetTicks()){
+    if(state[SDL_SCANCODE_K] && (mLastShootTime_ms + kShootingInterval_s*1000.0f) < SDL_GetTicks()){
         PongObject new_bullet(
             mShooter.coordinate + Point2(kThickness/2.0f, 0.0f),
             kThickness,

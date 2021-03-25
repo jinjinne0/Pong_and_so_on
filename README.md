@@ -6,7 +6,7 @@ I created two basic 2D games, "Pong", "Shooting".
 ![demo](https://raw.github.com/wiki/jinjinne0/Pong_and_so_on/images.gif/Pong_sample.gif)
 
 "Shooting":<p>
-
+![demo](https://raw.github.com/wiki/jinjinne0/Pong_and_so_on/images.gif/Shooting_sample.gif)
 
 # Requirement
 OS: macOS Big Sur version 11.2.1<br>
@@ -28,6 +28,7 @@ make<br>
 
 If you run "make", and output error "Library not loaded....SDL..", install SDL by homebrew and try again.
 
+## Rules
 "Pong": Keep a ball bouncing around on the screen with by sliding a paddle on the left of screen. The more Time Pass, the ball and paddle acceralate. If the ball go off the screen, the game will end and the points you`ve got will be displayed on terminal.
 
 Keyboard<br>
@@ -36,7 +37,14 @@ Keyboard<br>
 [E] slide the paddle up<br>
 [D] slide the paddle down<br> 
 
-"Shooting":
+"Shooting": Make sure that any enemy(red dot) go off the screen through the shooter(yellow dot) by shooting it with bullets. Interval of enemy appering is 2 seconds. If a enemy go off the screen or collide with the shooter, the game will end and the points you`ve got will be displayed on terminal.
+
+Keyboard<br>
+[A] start or restart the game<br> 
+[S] pause the game<br>
+[E] slide the paddle up<br>
+[D] slide the paddle down<br>
+[K] shoot a bullet<br>
 
 # Note
 It`s trainig to make me really understand single-threaded Game class,
